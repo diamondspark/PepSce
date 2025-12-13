@@ -1,0 +1,136 @@
+# ==================== Random Forest Settings ====================
+random_forest:
+  # Model Parameters
+  n_estimators: 100        # Number of trees in the forest
+  max_depth: null          # Maximum depth of trees (null = no limit)
+  min_samples_split: 2     # Minimum samples required to split an internal node
+  min_samples_leaf: 1      # Minimum samples required at a leaf node
+  max_features: "sqrt"     # Number of features to consider when looking for best split
+                          # Options: "sqrt", "log2", or a number
+  n_jobs: -1              # Number of parallel jobs (-1 = use all processors)
+  
+  # Data Split & Cross-Validation
+  test_size: 0.2          # 20% for final test set
+  n_folds: 3              # Number of folds for cross-validation
+  random_seed: 42
+  normalize_target: False  # Whether to normalize potency values
+  
+  # Normalization
+  scaler_type: "StandardScaler"  # StandardScaler or MinMaxScaler
+  
+  # Checkpointing
+  save_dir: "./models/random_forest"
+
+# ==================== General Settings ====================
+wandb: true
+device: "cuda"  # cuda or cpu
+reward_model_type: "rf" # rf or regression
+pca_load_path: '/groups/cherkasvgrp/Student_backup/mkpandey/My_Projects/Generative_Modeling/ACP/PepSce_Final/models/train_pcamodel.pkl'
+tarsa_screening: True
+# ==================== RL Navigation Settings ====================
+rl:
+  cache_train_rewards: false
+  model: "SAC"  # SAC, PPO
+  total_timesteps: 1000000000
+  train_batch: 2000000
+  samp_batch: 2000000
+  pca_load_path: '/groups/cherkasvgrp/Student_backup/mkpandey/My_Projects/Generative_Modeling/ACP/PepSce_Final/models/train_pcamodel.pkl'
+  model_savedir: "./models/tarsa"
+
+screening:
+  num_workers: 4 #Alternatively, you can set this according to your system's CPU cores. 0: all cores
+  policy_load_path: './models/tarsa/checkpoints/SAC_model_250000_steps.zip' #Path to the RL policy model
+
+# ==================== Regression Model Settings ====================
+regression:
+  # Model Architecture - CNN Branch (for sequence descriptors)
+  # Note: cnn_in_channels and seq_len will be auto-detected from data if not specified
+  cnn_in_channels: null  # null = auto-detect from data (e.g., 14 for ifeat)
+  cnn_out_channels: 5
+  cnn_kernel_sizes: [2, 3, 4, 5]  # Multiple kernel sizes for multi-scale features
+  cnn_fc_dims: [735, 128, 64]  # Fully connected layers after CNN
+  
+  # Model Architecture - MLP Branch (for fixed-size descriptors)
+  # Note: mlp_input_dim will be auto-detected from data if not specified
+  mlp_input_dim: null  # null = auto-detect from data (e.g., 139 for modlamp)
+  mlp_hidden_dims: [100, 64]
+  mlp_use_batchnorm: true
+  
+  # Model Architecture - Fusion Layers
+  fusion_hidden_dims: [64, 32]
+  dropout: 0.0  # Dropout probability (0 = no dropout)
+  
+  # Training Parameters
+  epochs: 100000
+  batch_size: 32
+  learning_rate: 1.0e-5
+  weight_decay: 1.0e-6
+  
+  # Loss Function (MSE, MAE, or Huber)
+  loss_function: "MSE"
+  
+  # Learning Rate Scheduler
+  scheduler_patience: 5
+  scheduler_factor: 0.5
+  scheduler_min_lr: 1.0e-7
+  
+  # Early Stopping
+  early_stopping_patience: 200
+  
+  # Data Loading
+  num_workers: 4
+  pin_memory: true
+  
+  # Normalization
+  scaler_type: "StandardScaler"  # StandardScaler or MinMaxScaler
+  
+  # Checkpointing
+  save_dir: "./models/regression"
+  save_every_n_epochs: 10
+  keep_best_n_models: 3
+  
+  # Wandb
+  wandb_project: "Neural_Regression_Peptide"
+  wandb_entity: null  # Set to your wandb username/team
+  
+  # Data Split & Cross-Validation
+  test_size: 0.2        # 20% for final test set
+  n_folds: 3            # Number of folds for cross-validation on training set
+  random_seed: 42
+  normalize_target: true  # Whether to normalize potency values
+  
+  # Model Loading (for inference/fine-tuning)
+  pretrained_model_path: null  # Path to .pt file
+  freeze_cnn: false
+  freeze_mlp: false
+
+# ==================== Data Paths ====================
+data:
+  # Single CSV file with columns: Peptide Name, Sequence, Potency
+  csv_path: "./data/peptides.csv"
+  
+  # Descriptor cache directory (optional - to save/load computed descriptors)
+  descriptors_cache: "./data/descriptors_cache"
+  
+# ==================== Logging ====================
+logging:
+  log_dir: "./logs"
+  tensorboard: false
+  save_training_plots: true
+  verbose: true
+
+# ==================== Custom Peptide Length Configuration ====================
+# This section is for users with different peptide sequence lengths
+# The model will automatically adapt to the sequence length in your data
+custom_peptide:
+  # Example: If you have peptides of length 10, 15, 20, etc., the model
+  # will handle them automatically. Just ensure your descriptors are in the format:
+  # - Sequence descriptors: (n_channels, seq_len) e.g., (14, 10) for length-10 peptides
+  # - Fixed descriptors: (n_features,) e.g., (139,) for modlamp
+  
+  min_seq_len: 5    # Minimum expected sequence length (for validation)
+  max_seq_len: 50   # Maximum expected sequence length (for validation)
+  
+  # If you want to pad/truncate sequences to a fixed length:
+  use_fixed_length: false
+  fixed_length: 15  # Only used if use_fixed_length is true

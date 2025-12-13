@@ -1,0 +1,24 @@
+# Results and outputs
+screening_out/
+results/
+outputs/
+
+# Weights and biases
+wandb/
+
+# Project-specific
+data/emb_esm1l6*/
+data/*.fasta
+data/*.pkl
+models/tarsa/checkpoints/
+models/*.pkl
+src/*.ipynb
+logs/
+runs/
+tensorboard_logs/
+.tensorboard
+*.zip
+
+# TensorBoard
+runs/
+logs/

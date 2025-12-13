@@ -1,11 +1,14 @@
+torch
 fair-esm
-torch==1.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
-tqdm
-pandas
+gymnasium
+git  https://github.com/Superzchen/iFeature.git #need to clone inside src folder
+modlamp
+pymc
+seaborn
+wandb
+scipy
 scikit-learn
-gym
-PyMC3
-setuptools==65.5.0
-pip==21
-wheel==0.38.0
-stable-baselines3==1.6.0
+tqdm
+easydict
+pyyaml
+stable-baselines3

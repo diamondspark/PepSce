@@ -1,0 +1,29 @@
+{
+  "n_folds": 3,
+  "fold_results": [
+    {
+      "fold_num": 1,
+      "best_val_loss": 667.7699279785156,
+      "best_pearson": 0.5180643200874329,
+      "final_epoch": 362
+    },
+    {
+      "fold_num": 2,
+      "best_val_loss": 351.00341796875,
+      "best_pearson": 0.5143871903419495,
+      "final_epoch": 339
+    },
+    {
+      "fold_num": 3,
+      "best_val_loss": 255.07526397705078,
+      "best_pearson": 0.08856706321239471,
+      "final_epoch": 328
+    }
+  ],
+  "avg_val_loss": 424.61620330810547,
+  "avg_pearson": 0.37367284297943115,
+  "test_loss": 302.6365661621094,
+  "test_pearson": 0.4547591209411621,
+  "best_fold_num": 3,
+  "training_date": "20251209_185029"
+}
