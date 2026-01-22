@@ -1,11 +1,14 @@
-# ACP Generative Modeling with Reinforcement Learning
+# ACP Screening with Reinforcement Learning
 
-This repository implements a generative modeling framework for designing antimicrobial peptides (ACPs) using Evolutionary Scale Modeling (ESM) embeddings and reinforcement learning (RL) with Soft Actor-Critic (SAC). The project leverages protein language models to generate and optimize peptide sequences in a navigation-based environment.
+This is the official repository for our Nature Communications paper: [A scalable reinforcement learning approach for screening large peptide libraries for bioactive peptide discovery](https://www.nature.com/articles/s41467-025-66748-y)
+
+This repository implements a screening framework for designing anticancer peptides (ACPs) using Evolutionary Scale Modeling (ESM) embeddings and reinforcement learning (RL) with Proximal Policy Optimization (and Soft Actor-Critic (SAC)). The project leverages protein language models to generate and optimize peptide sequences in a navigation-based environment.
+
 
 ## Features
 
 - **ESM Integration**: Uses ESM-1b for extracting embeddings from peptide sequences.
-- **Reinforcement Learning**: Employs SAC for sequence optimization in a custom navigation environment.
+- **Reinforcement Learning**: Employs PPO for sequence optimization in a custom navigation environment.
 - **Parallel Processing**: Supports multiprocessing for batch embedding extraction during screening.
 - **Evaluation**: Includes tools for policy evaluation and sampling new sequences.
 - **Configurable**: Highly configurable via YAML files for experiments.
@@ -255,9 +258,11 @@ This project is licensed under the MIT License.
 
 If you use this work, please cite:
 ```bibtex
-@software{pepscegeneration2024,
-  title={ACP Generative Modeling with Reinforcement Learning},
-  author={Pandey, M.K.},
-  year={2024}
+@article{pandey2025scalable,
+  title={A scalable reinforcement learning approach for screening large peptide libraries for bioactive peptide discovery},
+  author={Pandey, Mohit and Foo, Jane and Massah, Shabnam and Alford, Morgan A and Mslati, Hazem and Subbaraj, Gopeshh and Saba, Mira and Gentile, Francesco and Lallous, Nada and Haney, Evan F and others},
+  journal={Nature Communications},
+  year={2025},
+  publisher={Nature Publishing Group UK London}
 }
 ```
